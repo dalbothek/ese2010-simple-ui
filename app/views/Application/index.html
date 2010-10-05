@@ -1,0 +1,29 @@
+#{extends 'main.html' /}
+#{set title:'Home' /}
+
+<h1>Hello World!</h1>
+<ul>
+#{list items:questions, as:'question'}
+<li>${question.content()}<a href="@{Application.question(question.id())}">&gt;</a></li>
+#{/list}
+</ul>
+
+#{if user}
+
+	#{form @Secured.newQuestion()}
+
+		#{field 'content'}
+       		<label>New Question:</label>
+        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
+		#{/field}
+		<input type="submit" value="Post" />
+	#{/form}
+
+	<a href="@{Secure.logout}">Logout</a>
+	
+#{/if}
+#{else}
+
+	<a href="@{Secure.login}">Login</a>
+	
+#{/else}
