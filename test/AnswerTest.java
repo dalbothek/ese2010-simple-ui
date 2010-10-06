@@ -42,8 +42,8 @@ public class AnswerTest extends UnitTest {
 	
 	@Test
 	public void shouldHaveTimestamp() {
-		assertTrue(answer.timestamp() > 0);
-		assertTrue(answer.timestamp() <= (new Date()).getTime());
+		assertTrue(answer.timestamp() != null);
+		assertTrue(answer.timestamp().compareTo(new Date()) <= 0);
 	}
 	
 	@Test

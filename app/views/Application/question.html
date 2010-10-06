@@ -1,39 +1,51 @@
 #{extends 'main.html' /}
-#{set title:'Question' /}
+#{set title:'ajopi - Question by ' + user.name /}
 
-<h1>Hello World!</h1>
 #{if question}
-<h2>${question.content()}</h2>
-${question.downVotes()} - ${question.upVotes()}
-<ul>
-#{list items:answers, as:'answer'}
-<li>${answer.content()} ${answer.upVotes()} - ${answer.downVotes()} <a href="@{Secured.voteAnswerUp(question.id(), answer.id())}">Up</a>
-						<a href="@{Secured.voteAnswerDown(question.id(), answer.id())}">Down</a></li>
-#{/list}
-</ul>
+	<ul>
+		<li>
+			<h2>${question.owner().name()}:</h2>
+			<p>
+				${question.content()}
+			</p>
+			#{date question /}
+			#{if user && question.owner() != user}
+				#{vote question /}
+			#{/if}
+		</li>
+	</ul>
+	
+	#{if answers.size() > 0}
+		<h1>Answers</h1>
+		<ul>
+			#{list items:answers, as:'answer'}
+			<li>
+				<h2>${answer.owner().name()}:</h2>
+				<p>
+					${answer.content()}
+				</p>
+				#{date answer /}
+				#{if user && answer.owner() != user}
+					#{vote answer /}
+				#{/if}
+			</li>
+			#{/list}
+		</ul>
+	#{/if}
+	
+	
+	#{if user}
+		<h1>Add Answer</h1>
+		#{form @Secured.newAnswer(question.id())}
+			#{field 'content'}
+	        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
+			#{/field}
+			<input type="submit" value="Post" />
+		#{/form}
+	#{/if}
+
+
 #{/if}#{else}
-<h2>Question does not exist</h2>
+	<h1>Question does not exist.</h1>
 #{/else}
 
-#{if user}
-
-	#{form @Secured.newAnswer(question.id())}
-
-		#{field 'content'}
-       		<label>New Answer:</label>
-        	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
-		#{/field}
-		<input type="submit" value="Post" />
-	#{/form}
-
-	<a href="@{Secured.voteQuestionUp(question.id())}">Up</a>
-	<a href="@{Secured.voteQuestionDown(question.id())}">Down</a>
-
-	<a href="@{Secure.logout}">Logout</a>
-	
-#{/if}
-#{else}
-
-	<a href="@{Secure.login}">Login</a>
-	
-#{/else}

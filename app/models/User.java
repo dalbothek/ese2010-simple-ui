@@ -72,7 +72,11 @@ public class User {
 		return this.items.contains(item);
 	}
 
-
+	/**
+	 * Get the <code>User</code> with the given name.
+	 * @param name
+	 * @return a <code>User</code> or null if the given name doesn't exist.
+	 */
 	public static User get(String name) {
 		if(user.containsKey(name))
 			return user.get(name);

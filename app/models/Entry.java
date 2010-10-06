@@ -11,7 +11,7 @@ import java.util.*;
 public abstract class Entry extends Item {
 	
 	private String content;
-	private long timestamp;
+	private Date timestamp;
 	private HashMap<String,Vote> votes;
 	
 	/**
@@ -22,9 +22,11 @@ public abstract class Entry extends Item {
 	public Entry(User owner, String content) {
 		super(owner);
 		this.content = content;
-		this.timestamp = (new Date()).getTime();
+		this.timestamp = new Date();
 		this.votes = new HashMap();
 	}
+	
+	public abstract String type();
 	
 	/**
 	 * Unregisters the <code>Entry</code> if it gets deleted.
@@ -66,7 +68,7 @@ public abstract class Entry extends Item {
 	 * Get the time the <code>Entry</code> was created.
 	 * @return the creation date as a UNIX timestamp
 	 */
-	public double timestamp() {
+	public Date timestamp() {
 		return this.timestamp;
 	}
 	
@@ -86,6 +88,10 @@ public abstract class Entry extends Item {
 		return this.countVotes(false);
 	}
 	
+	/**
+	 * Get the current rating of the <code>Entry</code>.
+	 * @return rating as an <code>Integer</code>
+	 */
 	public int rating() {
 		return this.upVotes() - this.downVotes();
 	}
@@ -119,13 +125,14 @@ public abstract class Entry extends Item {
 	}
 	
 	private Vote vote(User user, boolean up) {
+		if(user == this.owner())
+			return null;
 		if(this.votes.containsKey(user.name()))
 			this.votes.get(user.name()).unregister();
 		Vote vote = new Vote(user, this, up);
 		this.votes.put(user.name(), vote);
 		return vote;
 	}
-	
-	
+
 
 }

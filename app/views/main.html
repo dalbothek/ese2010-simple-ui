@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
     <head>
         <title>#{get 'title' /}</title>
@@ -8,9 +7,33 @@
         #{get 'moreStyles' /}
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
         <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/qa.js'}" type="text/javascript" charset="utf-8"></script>
         #{get 'moreScripts' /}
     </head>
     <body>
-        #{doLayout /}
+    	<div>
+    		<header>
+    			<a href="@{Application.index}"></a>
+    			<nav>
+    				<a href="@{Application.index}">Questions</a>
+    				<span>
+    					#{if user}
+							Hi ${user.name()}!
+							<a href="@{Secure.logout}">Logout</a>
+						#{/if}
+						#{else}
+							Not logged in
+							<a href="@{Secure.login}">Login</a>
+						#{/else}	
+    				</span>
+    			</nav>
+    		</header>
+    		<article>
+        		#{doLayout /}
+        	</article>
+        	<footer>
+        		A demo project by Simon Marti & Mirco Kocher
+        	</footer>
+        </div>
     </body>
 </html>

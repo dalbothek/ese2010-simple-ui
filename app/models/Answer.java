@@ -24,6 +24,10 @@ public class Answer extends Entry {
 		this.id = id;
 	}
 	
+	public String type() {
+		return "Answer";
+	}
+	
 	/**
 	 * Unregisters all {@link Vote}s and itself.
 	 */

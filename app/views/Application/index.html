@@ -1,29 +1,33 @@
 #{extends 'main.html' /}
-#{set title:'Home' /}
+#{set title:'ajopi' /}
 
-<h1>Hello World!</h1>
 <ul>
 #{list items:questions, as:'question'}
-<li>${question.content()}<a href="@{Application.question(question.id())}">&gt;</a></li>
+	<li onclick="goto('@@{Application.question(question.id())}')">
+		<a href="@{Application.question(question.id())}">
+			<h2>${question.owner().name()}:</h2>
+		</a>
+		<p>
+			${question.content()}
+		</p>
+		#{date question /}
+		#{if user && question.owner() != user}
+			#{vote question /}
+		#{/if}
+	</li>
 #{/list}
 </ul>
 
+
+
 #{if user}
 
+	<h1>Ask Question</h1>
 	#{form @Secured.newQuestion()}
-
 		#{field 'content'}
-       		<label>New Question:</label>
         	<textarea name="${field.name}" class="${field.errorClass}"></textarea>
 		#{/field}
 		<input type="submit" value="Post" />
 	#{/form}
 
-	<a href="@{Secure.logout}">Logout</a>
-	
 #{/if}
-#{else}
-
-	<a href="@{Secure.login}">Login</a>
-	
-#{/else}

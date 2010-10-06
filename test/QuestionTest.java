@@ -39,7 +39,7 @@ public class QuestionTest extends UnitTest {
 	
 	@Test
 	public void shouldBeInPublicList() {
-		Collection q = Question.questions();
+		List q = Question.questions();
 		assertFalse(q == null);
 		assertTrue(q.contains(this.question));
 		int size = Question.questions().size();

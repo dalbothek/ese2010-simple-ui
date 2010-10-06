@@ -58,4 +58,13 @@ public class VoteTest extends UnitTest {
 		assertEquals(this.answer.downVotes(), 42);
 	}
 	
+	@Test
+	public void shouldDeleteOldVote() {
+		this.question.voteDown(bill);
+		this.question.voteUp(bill);
+		this.question.voteUp(bill);
+		assertEquals(this.question.upVotes(), 1);
+		assertEquals(this.question.downVotes(), 0);
+	}
+	
 }

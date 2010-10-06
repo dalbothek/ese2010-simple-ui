@@ -2,6 +2,11 @@ package models;
 
 import java.util.*;
 
+/**
+ * A Map of Objects with IDs.
+ *
+ * @param <E> Class to collect
+ */
 public class IDTable<E> {
 	private int id;
 	private HashMap<Integer,E> objects;

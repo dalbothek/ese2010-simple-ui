@@ -16,7 +16,7 @@ public class Application extends Controller {
     }
 	
     public static void index() {
-    	Collection<Question> questions = Question.questions();
+    	List<Question> questions = Question.questions();
         render(questions);
     }
     
@@ -25,7 +25,7 @@ public class Application extends Controller {
     	if(question == null) {
     		render();
     	} else {
-    		Collection<Answer> answers = question.answers();
+    		List<Answer> answers = question.answers();
     		render(question, answers);
     	}
     }
